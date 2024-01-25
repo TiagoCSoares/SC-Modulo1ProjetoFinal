@@ -1,6 +1,3 @@
-Id       | Nome                           | Telefone(s)
-00000001 | fsafsa fsafsa                  | DDD: 321, Número: 32112	DDD: 321, Número: 32112	
-       1 | fasfsa fass                    | (34)   341(34)   341
-       1 | tiago costa                    | (35)   998185087    
-       1 | tiago soares                   | (35)   1    (32)   3112    
-       1 | fsafsa fsafsa                  | (34)  421421412
+Id       | Nome                                          | Telefone(s)
+       1 | tiago costa                                   | (32)        123
+       2 | 321 412                                       | (23)         21
