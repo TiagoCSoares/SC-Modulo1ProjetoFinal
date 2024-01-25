@@ -52,9 +52,11 @@ public class Main {
                     "1 - Adicionar Contato\n" +
                     "2 - Remover Contato\n" +
                     "3 - Editar Contato\n" +
-                    "4 - Sair");
+                    "4 - Exibir os Contatos\n" +
+                    "5 - Sair");
             opcao = scanner.nextInt();
         }
 
+        scanner.close();
     }
 }

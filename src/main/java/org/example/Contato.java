@@ -31,4 +31,8 @@ public class Contato {
         return telefones;
     }
 
+    public String getNomeCompleto() {
+        String nomeCompleto = nome +" " + sobreNome;
+        return nomeCompleto;
+    }
 }
