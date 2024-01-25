@@ -4,11 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import static org.example.Writer.escreverNaAgenda;
+import static org.example.EscreverNaAgenda.escreverNaAgenda;
+import static org.example.LerAgenda.proximaIdDisponivel;
 
 public class AdicionarContato {
 
-    public static void adicionarContato(List<Contato> listaContatos, long idContato) {
+    public static void adicionarContato(List<Contato> listaContatos) {
+        long idContato = proximaIdDisponivel();
+
         Scanner scanner = new Scanner(System.in);
         System.out.println("Informe o nome do contato:");
         String nome = scanner.next();
@@ -17,7 +20,7 @@ public class AdicionarContato {
 
         List<Telefone> listaTelefones = new ArrayList<>();
         long idTelefone = 1;
-        listaTelefones = AdicionarTelefones(listaTelefones, idTelefone);
+        listaTelefones = adicionarTelefones(listaTelefones, idTelefone);
 
         for (char tem = 'S'; tem != 'N'; ) {
             System.out.println("Para adicionar um novo telefone " +
@@ -26,19 +29,21 @@ public class AdicionarContato {
             tem = scanner.next().charAt(0);
             tem = Character.toUpperCase(tem);
             if (tem == 'S') {
-                listaTelefones = AdicionarTelefones(listaTelefones, idTelefone);
+                listaTelefones = adicionarTelefones(listaTelefones, idTelefone);
             } else if (tem != 'N') {
                 System.out.println("Opção inválida.");
             }
         }
 
         Contato novoContato = new Contato(idContato, nome, sobrenome, listaTelefones);
-        listaContatos.add(novoContato);
+
         escreverNaAgenda(novoContato);
     }
 
 
-    public static List<Telefone> AdicionarTelefones(List<Telefone> listaTelefones, long idTelefone) {
+
+
+    public static List<Telefone> adicionarTelefones(List<Telefone> listaTelefones, long idTelefone) {
         Scanner scanner = new Scanner(System.in);
         int ddd;
         long numero;

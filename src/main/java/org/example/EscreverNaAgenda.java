@@ -5,7 +5,7 @@ import java.io.FileWriter;
 import java.io.BufferedWriter;
 import java.io.IOException;
 
-public class Writer {
+public class EscreverNaAgenda {
 
     public static void escreverNaAgenda(Contato novoContato) {
 
@@ -23,7 +23,7 @@ public class Writer {
 
             writer = new BufferedWriter(new FileWriter("src/agenda.txt", true));
             writer.write(String.format("%8d | ", novoContato.getId()));
-            writer.write(String.format("%-30s | " ,novoContato.getNomeCompleto()));
+            writer.write(String.format("%-45s | " ,novoContato.getNomeCompleto()));
 
             // Escreve os telefones
             for (Telefone telefone : novoContato.getTelefones()) {
@@ -45,6 +45,8 @@ public class Writer {
         }
     }
 
+
+
     private static void escreverCabecalho() throws IOException {
         BufferedWriter writer = null;
         try {
@@ -52,7 +54,7 @@ public class Writer {
             writer = new BufferedWriter(new FileWriter("src/agenda.txt", true));
 
             // Escreve o cabeçalho no arquivo
-            writer.write(String.format("%-8s | %-30s | %-10s", "Id", "Nome", "Telefone(s)"));
+            writer.write(String.format("%-8s | %-45s | %-10s", "Id", "Nome", "Telefone(s)"));
             writer.newLine();
         } finally {
             // Fecha o BufferedWriter no bloco finally para garantir que seja fechado mesmo em caso de exceção
