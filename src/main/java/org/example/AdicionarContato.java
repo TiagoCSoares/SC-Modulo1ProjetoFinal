@@ -21,15 +21,18 @@ public class AdicionarContato {
         List<Telefone> listaTelefones = new ArrayList<>();
         long idTelefone = 1;
         listaTelefones = adicionarTelefones(listaTelefones, idTelefone);
+        idTelefone++;
 
-        for (char tem = 'S'; tem != 'N'; ) {
+        for (char tem = ' '; tem != 'N'; ) {
             System.out.println("Para adicionar um novo telefone " +
                     "digite S/s. Se o contato não possuir mais" +
                     "telefones a serem adicionados digite N/n");
             tem = scanner.next().charAt(0);
             tem = Character.toUpperCase(tem);
             if (tem == 'S') {
+                System.out.println("lakaka");
                 listaTelefones = adicionarTelefones(listaTelefones, idTelefone);
+                idTelefone++;
             } else if (tem != 'N') {
                 System.out.println("Opção inválida.");
             }

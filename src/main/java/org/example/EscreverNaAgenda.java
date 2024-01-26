@@ -23,11 +23,12 @@ public class EscreverNaAgenda {
 
             writer = new BufferedWriter(new FileWriter("src/agenda.txt", true));
             writer.write(String.format("%8d | ", novoContato.getId()));
-            writer.write(String.format("%-45s | " ,novoContato.getNomeCompleto()));
+            writer.write(String.format("%15s | " ,novoContato.getNome()));
+            writer.write(String.format("%30s | ", novoContato.getSobrenome()));
 
             // Escreve os telefones
             for (Telefone telefone : novoContato.getTelefones()) {
-                writer.write(String.format("(%s)  %9d", telefone.getDdd(), telefone.getNumero()));
+                writer.write(String.format("%d  (%s)  %9d\t", telefone.getId(),telefone.getDdd(), telefone.getNumero()));
                 //writer.write("(" + telefone.getDdd() + ")   " + telefone.getNumero() + "    ");
             }
 
@@ -54,7 +55,7 @@ public class EscreverNaAgenda {
             writer = new BufferedWriter(new FileWriter("src/agenda.txt", true));
 
             // Escreve o cabeçalho no arquivo
-            writer.write(String.format("%-8s | %-45s | %-10s", "Id", "Nome", "Telefone(s)"));
+            writer.write(String.format("%-8s | %-45s | %-10s", "Id", "Nome", "Telefone(s): Id   (DDD)   Numero"));
             writer.newLine();
         } finally {
             // Fecha o BufferedWriter no bloco finally para garantir que seja fechado mesmo em caso de exceção

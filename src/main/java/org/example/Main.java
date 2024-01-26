@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import static org.example.AdicionarContato.adicionarContato;
+import static org.example.EditarContato.editarContato;
 import static org.example.ExibirAgenda.exibirAgenda;
 import static org.example.RemoverContato.removerContato;
 
@@ -25,8 +26,7 @@ public class Main {
                 "2 - Adicionar Contato\n" +
                 "3 - Remover Contato\n" +
                 "4 - Editar Contato\n" +
-                "5 - Exibir os Contatos\n" +
-                "6 - Sair");
+                "5 - Sair");
         int opcao = scanner.nextInt();
 
         while (opcao != 5) {
@@ -39,13 +39,12 @@ public class Main {
                     idContato++;
                     break;
                 case 3:
-                    removerContato(listaContatos);
+                    removerContato();
                     break;
                 case 4:
+                    editarContato();
                     break;
                 case 5:
-                    break;
-                case 6:
                     System.out.println("Saindo do programa.");
                     break;
                 default:
@@ -56,8 +55,7 @@ public class Main {
                     "2 - Adicionar Contato\n" +
                     "3 - Remover Contato\n" +
                     "4 - Editar Contato\n" +
-                    "5 - Exibir os Contatos\n" +
-                    "6 - Sair");
+                    "5 - Sair");
             opcao = scanner.nextInt();
         }
 
