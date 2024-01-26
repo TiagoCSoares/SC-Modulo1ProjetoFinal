@@ -22,4 +22,8 @@ public class Telefone {
     public long getId() {
         return id;
     }
+
+    public String getNumeroCompleto() {
+        return ddd+" "+numero;
+    }
 }

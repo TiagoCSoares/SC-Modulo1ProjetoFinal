@@ -1,2 +1,13 @@
 Id       | Nome                                          | Telefone(s): Id   (DDD)   Numero
-       1 | hfdhgd hfdhgd                                 | 1  (32)        312	
+       1 | Fernando Assis                                | 1  (32)  434323125	- 2  (34)  458712697
+       2 | Tiago Costa Soares                            | 1  (35)  998185087
+       3 | Maria Silva                                   | 1  (11)  987654321  -  2  (22)  123456789   - 3  (33)  555555555
+       4 | João Santos                                   | 1  (44)  987654321    - 2  (55)  123456789
+       5 | Ana Oliveira                                  | 1  (66)  987654321
+       7 | Renata Lima                                   | 1  (111) 987654321   - 2  (222) 123456789   - 3  (333) 555555555
+       8 | Tiago Costa                                   | 1  (13)     111111	
+       9 |           Tiago                         Soares | 1  (21)         21	
+      10 |                               gfdsgfds gdsgfs  | 1  (23)     321321
+      11 |                                      fjg hgdf | 1  (54)         75
+      12 |                              leticia carvalho | 1  (35)  998185087	
+      13 |                                  fsafsa gfhgd | 1  (98)         45	2  (65)    5436543	

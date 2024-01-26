@@ -23,18 +23,17 @@ public class EscreverNaAgenda {
 
             writer = new BufferedWriter(new FileWriter("src/agenda.txt", true));
             writer.write(String.format("%8d | ", novoContato.getId()));
-            writer.write(String.format("%15s " ,novoContato.getNome()));
-            writer.write(String.format("%30s | ", novoContato.getSobrenome()));
+            writer.write(String.format("%45s | " ,novoContato.getNomeCompleto()));
 
             // Escreve os telefones
             boolean primeiro = true;
             for (Telefone telefone : novoContato.getTelefones()) {
                 if(primeiro) {
                     writer.write(String.format("%d  (%s)  %9d\t", telefone.getId(), telefone.getDdd(), telefone.getNumero()));
+                    primeiro = false;
                 } else {
-                    writer.write(String.format("- %d  (%s)  %9d\t", telefone.getId(), telefone.getDdd(), telefone.getNumero()));
+                    writer.write(String.format(" - %d  (%s)  %9d\t", telefone.getId(), telefone.getDdd(), telefone.getNumero()));
                 }
-                //writer.write("(" + telefone.getDdd() + ")   " + telefone.getNumero() + "    ");
             }
 
             writer.newLine();
