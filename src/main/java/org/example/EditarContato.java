@@ -60,7 +60,6 @@ public class EditarContato {
                     }
                     writer.newLine();
                     editado = true;
-                    System.out.println("lakaka");
                 }
             }
             if (!editado) {
@@ -83,6 +82,8 @@ public class EditarContato {
             e.printStackTrace();
         }
     }
+
+
 
     public static boolean verificaListaVazia() {
 
@@ -143,13 +144,16 @@ public class EditarContato {
 
         Scanner scanner = new Scanner(System.in);
         int opcao = 0;
+        Contato contatoEditado = new Contato(idContato, nome, sobrenome, listaTelefones);
 
         do {
-            System.out.println("Qual informação você gostaria de editar?");
-            System.out.println("1 - Nome\n" +
-                    "2 - Editar Telefone\n" +
-                    "3 - Remover Telefone\n" +
-                    "4 - Sair de Editar");
+            System.out.println( "       >>>> Menu de Edição <<<<    \n" +
+                                "Qual informação você gostaria de editar?\n" +
+                                "1 - Nome\n" +
+                                "2 - Editar Telefone\n" +
+                                "3 - Adicionar Telefone\n" +
+                                "4 - Remover Telefone\n" +
+                                "5 - Sair de Editar");
             opcao = scanner.nextInt();
             switch (opcao) {
                 case 1:
@@ -159,12 +163,16 @@ public class EditarContato {
                     sobrenome = scanner.next();
                     break;
                 case 2:
-                    System.out.println("Qual o id do telefone?");
+                    listaTelefones = editarTelefone(listaTelefones);
                     break;
                 case 3:
-                    System.out.println("Qual o id do telefone?");
+                    listaTelefones = adicionarTelefone(listaTelefones);
                     break;
                 case 4:
+                    listaTelefones = removerTelefone(listaTelefones);
+                    break;
+                case 5:
+                    System.out.println("Saindo do Menu de Edição");
                     break;
                 default:
                     System.out.println("Opção inválida. Tente novamente:");
@@ -172,7 +180,78 @@ public class EditarContato {
             }
         } while (opcao != 4);
 
-            Contato contatoEditado = new Contato(idContato, nome, sobrenome, listaTelefones);
+            contatoEditado = new Contato(idContato, nome, sobrenome, listaTelefones);
             return contatoEditado;
+    }
+
+
+    public static List<Telefone> editarTelefone(List<Telefone> listaTelefones) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Qual o id do telefone?");
+        long idEdita = scanner.nextLong();
+        List<Telefone> novaListaEditada = new ArrayList<>();
+        boolean encontrou = false;
+        for(Telefone telefone: listaTelefones) {
+            if(telefone.getId() == idEdita) {
+                System.out.println("DDD:");
+                String ddd = scanner.next();
+                System.out.println("Número:");
+                long numero = scanner.nextLong();
+                telefone = new Telefone(idEdita, ddd, numero);
+                novaListaEditada.add(telefone);
+                encontrou = true;
+                break;
+            }
+            novaListaEditada.add(telefone);
+        }
+
+        if(!encontrou) {
+            System.out.println("Não foi possível encontrar o telefone.");
+        }
+
+        return novaListaEditada;
+    }
+
+
+    public static List<Telefone> adicionarTelefone(List<Telefone> listaTelefones) {
+        Scanner scanner = new Scanner(System.in);
+
+        long ultimoId = 0;
+        for (Telefone telefone : listaTelefones) {
+            if (telefone.getId() > ultimoId) {
+                ultimoId = telefone.getId();
+            }
+        }
+
+        System.out.println("DDD:");
+        String ddd = scanner.next();
+        System.out.println("Número:");
+        long numero = scanner.nextLong();
+        Telefone novoTelefone = new Telefone(ultimoId+1, ddd, numero);
+        listaTelefones.add(novoTelefone);
+
+        return listaTelefones;
+    }
+
+
+    public static List<Telefone> removerTelefone(List<Telefone> listaTelefones) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Qual o id do telefone?");
+        long idRemove = scanner.nextLong();
+        List<Telefone> novaListaEditada = new ArrayList<>();
+        boolean removeu = false;
+        for(Telefone telefone: listaTelefones) {
+            if(telefone.getId() == idRemove) {
+                removeu = true;
+                continue;
+            }
+            novaListaEditada.add(telefone);
+        }
+
+        if(!removeu) {
+            System.out.println("Não foi possível encontrar o telefone.");
+        }
+
+        return novaListaEditada;
     }
 }
