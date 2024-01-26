@@ -1,5 +1,9 @@
 package org.example;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -51,8 +55,64 @@ public class Teste {
         return contatoEditado;
     }
 
+
+    public static boolean telefoneExiste (String verificaTelefone) {
+
+        try {
+            File arquivo = new File("src/agenda.txt");
+
+            BufferedReader reader = new BufferedReader(new FileReader(arquivo));
+
+            String cabecalho = reader.readLine();
+            String linhaAtual;
+            while((linhaAtual = reader.readLine()) != null) {
+                String[] elementos = linhaAtual.split("\\s*[|\\-]+\\s*");
+                //String[] subElementos = elementos[2].trim().split("\\s+");
+                //String telefone = subElementos[1] + " " + subElementos[2];
+                //telefone = telefone.replace("(", "").replace(")", "");
+                //System.out.println(telefone);
+
+                int indiceELementos = 2;
+                //if (telefone.equals(verificaTelefone))
+                 //   return true;
+
+                do {
+                    String[] subElementos = elementos[indiceELementos].trim().split("\\s+");
+                    String telefone = subElementos[1] + " " + subElementos[2];
+                    telefone = telefone.replace("(", "").replace(")", "");
+                    System.out.println(telefone);
+
+                    if (telefone.equals(verificaTelefone))
+                        return true;
+
+                    indiceELementos++;
+                } while(indiceELementos < elementos.length);
+            }
+            /*
+                int indiceElementos = 3;
+
+                while (indiceElementos < elementos.length) {
+                    // Verificar se existem elementos suficientes para formar um número de telefone
+                    subElementos = elementos[indiceElementos].trim().split("\\s+");
+
+                    telefone = subElementos[1].trim() + " " + subElementos[2].trim();
+                    if (telefone.equals(verificaTelefone))
+                        return true;
+
+                    indiceElementos ++;
+                }
+                }*/
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     public static void main(String[] args) {
-        String linhaAtual = "      21 | nome. sobrenome                               | 2  (32)          3  -  3  (34)   22\t";
-        novasInformações(linhaAtual);
+        //String linhaAtual = "      21 | nome. sobrenome                               | 2  (32)          3  -  3  (34)   22\t";
+        //novasInformações(linhaAtual);
+        String telefone = "35 998185087";
+        boolean existe = telefoneExiste(telefone);
+        System.out.println(existe);
     }
 }

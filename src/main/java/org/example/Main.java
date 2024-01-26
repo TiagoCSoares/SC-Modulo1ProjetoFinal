@@ -15,16 +15,13 @@ public class Main {
 
         long idContato = 1;
         List<Contato> listaContatos = new ArrayList<>();
-
         Scanner scanner = new Scanner(System.in);
-
-        System.out.println("##################\n" +
-                "##### AGENDA #####\n" +
-                "##################");
         int opcao = 0;
-
         do {
-            System.out.println("\n\n>>>> Menu <<<<\n" +
+            System.out.println("##################\n" +
+                    "##### AGENDA #####\n" +
+                    "##################");
+            System.out.println(">>>> Menu <<<<\n" +
                     "1 - Exibir Agenda\n" +
                     "2 - Adicionar Contato\n" +
                     "3 - Remover Contato\n" +
@@ -52,7 +49,6 @@ public class Main {
                     System.out.println("Opção inválida, tente novamente.");
             }
         } while (opcao != 5);
-
         scanner.close();
     }
 }

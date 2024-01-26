@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import static org.example.AdicionarContato.adicionarTelefones;
 import static org.example.Teste.novasInformações;
 
 public class EditarContato {
@@ -40,16 +41,7 @@ public class EditarContato {
                 } else {
                     //Editar o contato
                     Contato contatoEditado = novasInformações(linhaAtual);
-                   // List<Telefone> listaTelefones = contatoEditado.getTelefones();
-                    /*List<Telefone> listaTelefones = new ArrayList<>();
-                    long idTel  = 2;
-                    long numero = 3;
-                    Telefone tel = new Telefone(idTel, "32", numero);
-                    listaTelefones.add(tel);
-                    long lakaka = 21;
 
-                    Contato contatoEditado = new Contato(lakaka, "nome.","sobrenome", listaTelefones);
-                     */
                     writer.write(String.format("%8d | ", contatoEditado.getId()));
                     writer.write(String.format("%-45s | ", contatoEditado.getNomeCompleto()));
 
@@ -166,7 +158,7 @@ public class EditarContato {
                     listaTelefones = editarTelefone(listaTelefones);
                     break;
                 case 3:
-                    listaTelefones = adicionarTelefone(listaTelefones);
+                    listaTelefones = novoTelefone(listaTelefones);
                     break;
                 case 4:
                     listaTelefones = removerTelefone(listaTelefones);
@@ -193,11 +185,22 @@ public class EditarContato {
         boolean encontrou = false;
         for(Telefone telefone: listaTelefones) {
             if(telefone.getId() == idEdita) {
+                int ddd;
+                long numero;
                 System.out.println("DDD:");
-                String ddd = scanner.next();
-                System.out.println("Número:");
-                long numero = scanner.nextLong();
-                telefone = new Telefone(idEdita, ddd, numero);
+                ddd = scanner.nextInt();
+                while (ddd > 99 || ddd < 1) {
+                    System.out.println("DDD inválido, tente novamente: ");
+                    ddd = scanner.nextInt();
+                }
+                System.out.println("Digite o número:");
+                numero = scanner.nextInt();
+                while (numero > 1000000000 || numero < 1) {
+                    System.out.println("Número inválido, tente novamente: ");
+                    numero = scanner.nextLong();
+                }
+                String dddString = Integer.toString(ddd);
+                telefone = new Telefone(idEdita, dddString, numero);
                 novaListaEditada.add(telefone);
                 encontrou = true;
                 break;
@@ -213,25 +216,19 @@ public class EditarContato {
     }
 
 
-    public static List<Telefone> adicionarTelefone(List<Telefone> listaTelefones) {
+    public static List<Telefone> novoTelefone(List<Telefone> listaTelefones) {
         Scanner scanner = new Scanner(System.in);
 
         long ultimoId = 0;
         for (Telefone telefone : listaTelefones) {
             if (telefone.getId() > ultimoId) {
-                ultimoId = telefone.getId();
+                ultimoId = telefone.getId() + 1;
             }
         }
-
-        System.out.println("DDD:");
-        String ddd = scanner.next();
-        System.out.println("Número:");
-        long numero = scanner.nextLong();
-        Telefone novoTelefone = new Telefone(ultimoId+1, ddd, numero);
-        listaTelefones.add(novoTelefone);
-
-        return listaTelefones;
+        return adicionarTelefones(listaTelefones, ultimoId+1);
     }
+
+
 
 
     public static List<Telefone> removerTelefone(List<Telefone> listaTelefones) {
