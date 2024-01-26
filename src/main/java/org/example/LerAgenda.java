@@ -9,15 +9,10 @@ public class LerAgenda {
     public static long proximaIdDisponivel() {
 
         BufferedReader reader = null;
-        long idDisponivel = 0;
+        long idDisponivel = 1;
 
         try {
             File arquivo = new File("src/agenda.txt");
-
-            if(!arquivo.exists() || arquivo.length() == 0) {
-                idDisponivel = 1;
-                return idDisponivel;
-            }
 
             reader = new BufferedReader(new FileReader(arquivo));
             String linha;

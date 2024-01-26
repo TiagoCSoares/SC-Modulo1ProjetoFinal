@@ -1,3 +1,2 @@
-Id       | Nome                                          | Telefone(s)
-       1 | tiago costa                                   | (32)        123
-       2 | 321 412                                       | (23)         21
+Id       | Nome                                          | Telefone(s): Id   (DDD)   Numero
+       1 | hfdhgd hfdhgd                                 | 1  (32)        312	

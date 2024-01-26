@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import static org.example.AdicionarContato.adicionarContato;
+import static org.example.EditarContato.editarContato;
 import static org.example.ExibirAgenda.exibirAgenda;
 import static org.example.RemoverContato.removerContato;
 
@@ -15,21 +16,21 @@ public class Main {
         long idContato = 1;
         List<Contato> listaContatos = new ArrayList<>();
 
+        Scanner scanner = new Scanner(System.in);
+
         System.out.println("##################\n" +
                 "##### AGENDA #####\n" +
                 "##################");
-        Scanner scanner = new Scanner(System.in);
+        int opcao = 0;
 
-        System.out.println(">>>> Menu <<<<\n" +
-                "1 - Exibir Agenda\n" +
-                "2 - Adicionar Contato\n" +
-                "3 - Remover Contato\n" +
-                "4 - Editar Contato\n" +
-                "5 - Exibir os Contatos\n" +
-                "6 - Sair");
-        int opcao = scanner.nextInt();
-
-        while (opcao != 5) {
+        do {
+            System.out.println("\n\n>>>> Menu <<<<\n" +
+                    "1 - Exibir Agenda\n" +
+                    "2 - Adicionar Contato\n" +
+                    "3 - Remover Contato\n" +
+                    "4 - Editar Contato\n" +
+                    "5 - Sair");
+            opcao = scanner.nextInt();
             switch (opcao) {
                 case 1:
                     exibirAgenda();
@@ -39,27 +40,18 @@ public class Main {
                     idContato++;
                     break;
                 case 3:
-                    removerContato(listaContatos);
+                    removerContato();
                     break;
                 case 4:
+                    editarContato();
                     break;
                 case 5:
-                    break;
-                case 6:
                     System.out.println("Saindo do programa.");
                     break;
                 default:
                     System.out.println("Opção inválida, tente novamente.");
             }
-            System.out.println(">>>> Menu <<<<\n" +
-                    "1 - Exibir Agenda\n" +
-                    "2 - Adicionar Contato\n" +
-                    "3 - Remover Contato\n" +
-                    "4 - Editar Contato\n" +
-                    "5 - Exibir os Contatos\n" +
-                    "6 - Sair");
-            opcao = scanner.nextInt();
-        }
+        } while (opcao != 5);
 
         scanner.close();
     }
