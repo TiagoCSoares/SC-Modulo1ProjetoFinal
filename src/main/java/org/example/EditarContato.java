@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import static org.example.Teste.novasInformações;
+
 public class EditarContato {
 
     public static void editarContato() {
@@ -37,20 +39,23 @@ public class EditarContato {
                     writer.write(linhaAtual + System.getProperty("line.separator"));
                 } else {
                     //Editar o contato
-                    //Contato contatatoEditado = novasInformações(linhaAtual);
-                    List<Telefone> listaTelefones = new ArrayList<>();
+                    Contato contatoEditado = novasInformações(linhaAtual);
+                   // List<Telefone> listaTelefones = contatoEditado.getTelefones();
+                    /*List<Telefone> listaTelefones = new ArrayList<>();
                     long idTel  = 2;
                     long numero = 3;
                     Telefone tel = new Telefone(idTel, "32", numero);
                     listaTelefones.add(tel);
                     long lakaka = 21;
+
                     Contato contatoEditado = new Contato(lakaka, "nome.","sobrenome", listaTelefones);
+                     */
                     writer.write(String.format("%8d | ", contatoEditado.getId()));
                     writer.write(String.format("%-45s | ", contatoEditado.getNomeCompleto()));
 
                     // Escreve os telefones
                     for (Telefone telefone : contatoEditado.getTelefones()) {
-                        writer.write(String.format("(%s)  %9d", telefone.getDdd(), telefone.getNumero()));
+                        writer.write(String.format("%d  (%s)  %9d\t", telefone.getId(),telefone.getDdd(), telefone.getNumero()));
                         //writer.write("(" + telefone.getDdd() + ")   " + telefone.getNumero() + "    ");
                     }
                     writer.newLine();
@@ -101,63 +106,73 @@ public class EditarContato {
 
     public static Contato novasInformações(String linhaAtual) {
 
-        String[] elementos = linhaAtual.split("\\s*\\|\\s*");
+        String[] elementos = linhaAtual.split("\\s*[|\\-]+\\s*");
         long idContato = Long.parseLong(elementos[0].trim());
-        String nome = elementos[1].trim().substring(0, 15);
-        String sobreNome = elementos[2].trim().substring(0, 30);
+        String nome = elementos[1].trim();
+        String sobrenome = "";
 
+        String telefone = elementos[2].trim();
+        String[] subElementos = telefone.split("\\s+");
         List<Telefone> listaTelefones = new ArrayList<>();
-        long idTelefone = Long.parseLong(elementos[3].trim());
-        int ddd = Integer.parseInt(elementos[4].trim());
-        String dddString = Integer.toString(ddd);
-        long numero = Long.parseLong(elementos[5].trim());
-        int indiceElementos = 6;
+
+        long idTelefone = Long.parseLong(subElementos[0].trim());
+        String ddd = subElementos[1];
+        String dddString = ddd.replace("(", "").replace(")", "");
+        long numero = Long.parseLong(subElementos[2].trim());
+        int indiceElementos = 3;
 
         Telefone novoTel = new Telefone(idTelefone, dddString, numero);
         listaTelefones.add(novoTel);
+
         while (indiceElementos < elementos.length) {
             // Verificar se existem elementos suficientes para formar um número de telefone
-            if (indiceElementos + 2 < elementos.length) {
-                idTelefone = Long.parseLong(elementos[indiceElementos].trim());
-                ddd = Integer.parseInt(elementos[indiceElementos + 1].trim());
-                dddString = Integer.toString(ddd);
-                numero = Long.parseLong(elementos[indiceElementos + 2].trim());
+            telefone = elementos[indiceElementos].trim();
+            subElementos = telefone.split("\\s+");
 
-                // Criar um objeto Telefone e adicioná-lo à lista
-                Telefone telefone = new Telefone(idTelefone, dddString, numero);
-                listaTelefones.add(telefone);
+            idTelefone = Long.parseLong(subElementos[0].trim());
+            ddd = subElementos[1];
+            dddString = ddd.replace("(", "").replace(")", "");
+            numero = Long.parseLong(subElementos[2].trim());
 
-                // Atualizar o índice para os próximos elementos
-                indiceElementos += 3;
-            } else {
-                // Caso não haja elementos suficientes, interromper o loop
-                break;
-            }
+            // Criar um objeto Telefone e adicioná-lo à lista
+            novoTel = new Telefone(idTelefone, dddString, numero);
+            listaTelefones.add(novoTel);
+            // Atualizar o índice para os próximos elementos
+            indiceElementos += 3;
         }
 
-        System.out.println("Qual informação você gostaria de editar?");
-        System.out.println("1 - Nome\n" +
-                "2 - Sobrenome\n" +
-                "3 - Telefone\n" +
-                "4 - Sair de Editar");
         Scanner scanner = new Scanner(System.in);
-        int opcao = scanner.nextInt();
+        int opcao = 0;
 
-        while (opcao != 4) {
+        do {
+            System.out.println("Qual informação você gostaria de editar?");
+            System.out.println("1 - Nome\n" +
+                    "2 - Editar Telefone\n" +
+                    "3 - Remover Telefone\n" +
+                    "4 - Sair de Editar");
+            opcao = scanner.nextInt();
             switch (opcao) {
                 case 1:
+                    System.out.println("Nome: ");
+                    nome = scanner.next();
+                    System.out.println("Sobrenome: ");
+                    sobrenome = scanner.next();
                     break;
                 case 2:
+                    System.out.println("Qual o id do telefone?");
                     break;
                 case 3:
+                    System.out.println("Qual o id do telefone?");
                     break;
                 case 4:
                     break;
                 default:
+                    System.out.println("Opção inválida. Tente novamente:");
                     opcao = scanner.nextInt();
             }
-        }
-            Contato contatoEditado = new Contato(idContato, nome, sobreNome, listaTelefones);
+        } while (opcao != 4);
+
+            Contato contatoEditado = new Contato(idContato, nome, sobrenome, listaTelefones);
             return contatoEditado;
     }
 }
