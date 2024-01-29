@@ -8,34 +8,24 @@ import java.io.IOException;
 public class ExibirAgenda {
 
     public static void exibirAgenda() {
-        BufferedReader reader = null;
 
-        try {
-            File arquivo = new File("src/agenda.txt");
+       File arquivo = new File("src/agenda.txt");
 
-            reader = new BufferedReader(new FileReader(arquivo));
-            String linha;
-            String cabecalho;
-            cabecalho = reader.readLine();
-            linha = reader.readLine();
+        try (BufferedReader reader = new BufferedReader(new FileReader(arquivo))){
+
+            String cabecalho = reader.readLine();
+            String linha = reader.readLine();
             if (!arquivo.exists() || arquivo.length() == 0 || linha == null) {
-                System.out.println("A agenda está vazia.");
+                System.out.println("\nA agenda está vazia.\n");
                 return;
             }
             System.out.println(cabecalho);
             do{
                 System.out.println(linha);
             } while ((linha = reader.readLine()) != null);
+            System.out.println();
         } catch (IOException e) {
-            System.out.println("Erro ao ler a agenda: " + e.getMessage());
-        } finally {
-            if (reader != null) {
-                try {
-                    reader.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
+            System.out.println("\nErro ao ler a agenda: " + e.getMessage() + "\n");
         }
     }
 }

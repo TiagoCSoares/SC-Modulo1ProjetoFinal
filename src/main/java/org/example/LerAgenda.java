@@ -8,19 +8,17 @@ import java.io.IOException;
 public class LerAgenda {
     public static long proximaIdDisponivel() {
 
-        BufferedReader reader = null;
+
         long idDisponivel = 1;
 
-        try {
-            File arquivo = new File("src/agenda.txt");
+        try (BufferedReader reader = new BufferedReader(new FileReader("src/agenda.txt"))){
 
-            reader = new BufferedReader(new FileReader(arquivo));
             String linha;
             String cabecalho = reader.readLine();
 
             while((linha = reader.readLine()) != null) {
                 String[] elementos = linha.split("\\s*\\|\\s*"); // Dividir a linha pelos delimitadores "|"
-                if (elementos.length > 0) {
+                if (elementos.length > 0 && !elementos[0].trim().isEmpty()) {
                     // O primeiro elemento após a divisão é a ID
                     idDisponivel = Long.parseLong(elementos[0].trim()) + 1;
                     // Agora idDisponivel contém a ID da linha atual
@@ -28,15 +26,25 @@ public class LerAgenda {
             }
         } catch (IOException e) {
             System.out.println("Erro ao ler a agenda: " + e.getMessage());
-        } finally {
-            if (reader != null) {
-                try {
-                    reader.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
         }
         return idDisponivel;
+    }
+
+
+    public static boolean verificaListaVazia() {
+
+        File arquivo = new File("src/agenda.txt");
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(arquivo))){
+
+            String cabecalho = reader.readLine(); //Retira o cabeçalho, caso exista
+            String linhaAtual = reader.readLine(); //A próxima linha já é os contatos
+            if(!arquivo.exists() || arquivo.length() == 0  || linhaAtual == null) {
+                return true;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 }
