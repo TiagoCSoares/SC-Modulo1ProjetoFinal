@@ -5,37 +5,37 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import static org.example.EscreverNaAgenda.escreverNaAgenda;
+import static org.example.EscreverNaAgenda.*;
 import static org.example.LerAgenda.proximaIdDisponivel;
 
 public class AdicionarContato {
 
-    public static void adicionarContato(List<Contato> listaContatos) {
+    public static void adicionarContato(Scanner scanner) {
+
+        criaArquivo();
         long idContato = proximaIdDisponivel();
 
-        Scanner scanner = new Scanner(System.in);
         System.out.print("Nome do contato:");
-        String nome = scanner.next();
+        String nome = scanner.nextLine();
         System.out.print("Sobrenome do contato:");
-        String sobrenome = scanner.next();
+        String sobrenome = scanner.nextLine();
 
         List<Telefone> listaTelefones = new ArrayList<>();
         long idTelefone = 1;
-        listaTelefones = adicionarTelefones(listaTelefones, idTelefone);
+        listaTelefones = adicionarTelefones(listaTelefones, idTelefone, scanner);
         idTelefone++;
 
         for (char tem = ' '; tem != 'N'; ) {
-            System.out.println("Para adicionar um novo telefone " +
+            System.out.print("Para adicionar um novo telefone " +
                     "digite S/s. Se o contato não possuir mais" +
                     "telefones a serem adicionados digite N/n");
             tem = scanner.next().charAt(0);
             tem = Character.toUpperCase(tem);
             if (tem == 'S') {
-                System.out.println("lakaka");
-                listaTelefones = adicionarTelefones(listaTelefones, idTelefone);
+                listaTelefones = adicionarTelefones(listaTelefones, idTelefone, scanner);
                 idTelefone++;
             } else if (tem != 'N') {
-                System.out.println("Opção inválida.");
+                System.out.println("Opção inválida! Tente novamente.");
             }
         }
 
@@ -47,24 +47,25 @@ public class AdicionarContato {
 
 
 
-    public static List<Telefone> adicionarTelefones(List<Telefone> listaTelefones, long idTelefone) {
-        Scanner scanner = new Scanner(System.in);
+    public static List<Telefone> adicionarTelefones(List<Telefone> listaTelefones, long idTelefone, Scanner scanner) {
+
         int ddd;
         String dddString;
         long numero;
+
         boolean existe;
         String verificaTelefone;
         do {
-            System.out.println("DDD:");
+            System.out.print("DDD:");
             ddd = scanner.nextInt();
             while (ddd > 99 || ddd < 1) {
-                System.out.println("DDD inválido, tente novamente: ");
+                System.out.print("DDD inválido, tente novamente: ");
                 ddd = scanner.nextInt();
             }
-            System.out.println("Digite o número:");
-            numero = scanner.nextInt();
+            System.out.print("Número:");
+            numero = scanner.nextLong();
             while (numero > 1000000000 || numero < 1) {
-                System.out.println("Número inválido, tente novamente: ");
+                System.out.print("Número inválido, tente novamente: ");
                 numero = scanner.nextLong();
             }
             dddString = Integer.toString(ddd);
@@ -85,10 +86,9 @@ public class AdicionarContato {
 
     public static boolean telefoneExiste (String verificaTelefone) {
 
-        try {
-            File arquivo = new File("src/agenda.txt");
+        File arquivo = new File("src/agenda.txt");
 
-            BufferedReader reader = new BufferedReader(new FileReader(arquivo));
+        try (BufferedReader reader = new BufferedReader(new FileReader(arquivo))){
 
             String cabecalho = reader.readLine();
             String linhaAtual;
@@ -107,6 +107,7 @@ public class AdicionarContato {
 
                     indiceElementos ++;
                 } while (indiceElementos < elementos.length);
+
             }
         } catch (IOException e) {
             e.printStackTrace();
