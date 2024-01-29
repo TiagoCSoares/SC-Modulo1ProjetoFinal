@@ -1,9 +1,6 @@
 package org.example;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 
 public class LerAgenda {
     public static long proximaIdDisponivel() {
@@ -37,13 +34,17 @@ public class LerAgenda {
 
         try (BufferedReader reader = new BufferedReader(new FileReader(arquivo))){
 
-            String cabecalho = reader.readLine(); //Retira o cabeçalho, caso exista
-            String linhaAtual = reader.readLine(); //A próxima linha já é os contatos
+            String cabecalho = reader.readLine(); // Retira o cabeçalho, caso exista
+            String linhaAtual = reader.readLine(); // A próxima linha já é os contatos
             if(!arquivo.exists() || arquivo.length() == 0  || linhaAtual == null) {
                 return true;
             }
+        } catch (FileNotFoundException e) {
+            System.out.println("Erro: Arquivo não encontrado: " + e.getMessage());
+            return true;
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Erro de E/S: " + e.getMessage());
+            return true;
         }
         return false;
     }

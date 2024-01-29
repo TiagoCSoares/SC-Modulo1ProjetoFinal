@@ -34,6 +34,7 @@ public class EscreverNaAgenda {
 
     public static void escreverCabecalho() {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("src/agenda.txt", true))) {
+
             // Escreve o cabeçalho no arquivo
             writer.write(String.format("%-8s | %-45s | %-10s", "Id", "Nome", "Telefone(s): Id   (DDD)   Numero"));
             writer.newLine();
