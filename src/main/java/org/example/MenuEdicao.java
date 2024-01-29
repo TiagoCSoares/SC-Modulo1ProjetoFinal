@@ -17,7 +17,7 @@ public class MenuEdicao {
 
         do {
             System.out.println("""
-                           >>>> Menu de Edição <<<<   \s
+                           \n>>>> Menu de Edição <<<<   \s
                     Qual informação você gostaria de editar?
                     1 - Nome
                     2 - Editar Telefone

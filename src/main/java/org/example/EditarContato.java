@@ -14,6 +14,7 @@ public class EditarContato {
 
     public static void editarContato(Scanner scanner) {
 
+        // Verifica se a lista  contém algum contato
         boolean vazio = verificaListaVazia();
         if (vazio) {
             System.out.println("A agenda está vazia. Não há contatos a serem editados.");
@@ -21,7 +22,14 @@ public class EditarContato {
         }
 
         System.out.print("Informe o id do contato que você deseja editar:");
+        while (!scanner.hasNextLong()) {
+            System.out.print("Digite um valor válido para ID: ");
+            scanner.next(); // Consome a entrada inválida
+        }
         long idEdita = scanner.nextLong();
+
+
+
         File arquivo = new File("src/agenda.txt");
         File arquivoTemp = new File("src/temp.txt");
 
@@ -30,25 +38,33 @@ public class EditarContato {
 
             boolean editado = false;
 
+            // Escreve o cabecalho no novo arquivo
             String cabecalho = reader.readLine();
             writer.write(cabecalho);
             writer.newLine();
             String linhaAtual;
 
+            // Loop que percorre o arquivo e o reescreve no novo arquivo
             while ((linhaAtual = reader.readLine()) != null) {
+
+                // Divide a linha em elementos, os elementos são separados por | e -
                 String[] elementos = linhaAtual.split("\\s*\\|\\s*");
+
+                // Se o primeiro elemento (Id) for diferente da id buscada, escreve a linha sem alterações
                 if (Long.parseLong(elementos[0].trim()) != idEdita) {
                     writer.write(linhaAtual);
                     writer.newLine();
                 } else {
-                    //Editar o contato
+                    // Caso encontre a id do contato chama a função novasInformacoes para editar os dados
                     Contato contatoEditado = novasInformacoes(linhaAtual, scanner);
 
+                    // Escreve os dados do contatoEditado no novo arquivo
                     writer.write(String.format("%-8d | ", contatoEditado.getId()));
                     writer.write(String.format("%-45s | ", contatoEditado.getNomeCompleto()));
 
-                    // Escreve os telefones
+                    //  Booleano para verificar se é o primeiro telefone sendo escrito
                     boolean primeiro = true;
+
                     for (Telefone telefone : contatoEditado.getTelefones()) {
                         if(primeiro) {
                             writer.write(String.format("%d  (%s)  %-9d\t", telefone.getId(), telefone.getDdd(), telefone.getNumero()));
@@ -61,9 +77,9 @@ public class EditarContato {
                     editado = true;
                 }
             }
+
             if (!editado)
                 System.out.println("O Contato não foi encontrado");
-
 
             if (arquivo.delete()) {
                 if (!arquivoTemp.renameTo(arquivo)) {
@@ -84,7 +100,9 @@ public class EditarContato {
 
     public static Contato novasInformacoes(String linhaAtual, Scanner scanner) {
 
+        // Divide a linha em elementos, os elementos são separados por | e -
         String[] elementos = linhaAtual.split("\\s*[|\\-]+\\s*");
+
         long idContato = Long.parseLong(elementos[0].trim());
         String nome = elementos[1].trim();
         String sobrenome = "";
@@ -96,6 +114,7 @@ public class EditarContato {
         long idTelefone = Long.parseLong(subElementos[0].trim());
         String ddd = subElementos[1];
         String dddString = ddd.replace("(", "").replace(")", "");
+
         long numero = Long.parseLong(subElementos[2].trim());
         int indiceElementos = 3;
 
@@ -103,6 +122,7 @@ public class EditarContato {
         listaTelefones.add(novoTel);
 
         while (indiceElementos < elementos.length) {
+
             // Verificar se existem elementos suficientes para formar um número de telefone
             telefone = elementos[indiceElementos].trim();
             subElementos = telefone.split("\\s+");
@@ -115,7 +135,9 @@ public class EditarContato {
             // Criar um objeto Telefone e adicioná-lo à lista
             novoTel = new Telefone(idTelefone, dddString, numero);
             listaTelefones.add(novoTel);
+
             // Atualizar o índice para os próximos elementos
+            // Como os subElementos já estão divididos, são 3 subElementos: id ddd numero
             indiceElementos += 3;
         }
 
@@ -130,9 +152,19 @@ public class EditarContato {
     public static List<Telefone> editarTelefone(List<Telefone> listaTelefones, Scanner scanner) {
 
         System.out.print("Qual o id do telefone?");
+
+        while (!scanner.hasNextLong()) {
+            System.out.print("Digite um valor válido para ID: ");
+            scanner.next(); // Consome a entrada inválida
+        }
         long idEdita = scanner.nextLong();
+
+
+
         List<Telefone> novaListaEditada = new ArrayList<>();
         boolean encontrou = false;
+
+        // Percorre a Lista de telefones em busca do número com a id igual
         for(Telefone telefone: listaTelefones) {
             if(telefone.getId() == idEdita) {
                 String verificaTelefone;
@@ -184,8 +216,13 @@ public class EditarContato {
 
     public static List<Telefone> removerTelefone(List<Telefone> listaTelefones, Scanner scanner) {
 
-        System.out.print("Qual o id do telefone?");
+        System.out.print("Informe o id do telefone que você deseja remover:");
+        while (!scanner.hasNextLong()) {
+            System.out.print("Digite um valor válido para ID: ");
+            scanner.next(); // Consome a entrada inválida
+        }
         long idRemove = scanner.nextLong();
+
         List<Telefone> novaListaEditada = new ArrayList<>();
 
         boolean removeu = false;
